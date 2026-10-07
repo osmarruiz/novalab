@@ -147,7 +147,7 @@ export const LAB_SERVICES: LabService[] = [
     modality: 'remote',
     name: 'T-Mobile | Sprint | MetroPCS Network Unlock [Premium 100%]',
     models: 'iPhone 5S al 18 Pro Max / Duo',
-    symptoms: ['Desbloqueo oficial permanente por IMEI de servidor', 'Tasa 100% de éxito garantizada de por vida'],
+    symptoms: ['Desbloqueo oficial permanente por IMEI de servidor', 'Tasa 100% de éxito de por vida'],
     workshopPriceNIO: 5800,
     workshopPriceUSD: 155,
     suggestedRetailNIO: 7800,
