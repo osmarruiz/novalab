@@ -94,6 +94,17 @@ export default function LabPriceCatalog() {
         })}
       </div>
 
+      {/* Technical notice for Board Swap */}
+      {(selectedCategory === 'board_swap' || selectedCategory === 'all') && (
+        <div className="mb-4 p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-start gap-2.5 text-xs font-mono">
+          <span className="text-amber-400 text-sm mt-0.5 shrink-0">⚠️</span>
+          <div className="text-zinc-300 text-[11px] leading-relaxed">
+            <span className="text-amber-400 font-bold">Nota técnica sobre Cambio de Placa: </span>
+            Servicio de <strong className="text-zinc-200">último recurso</strong> para placas con daño severo o irreparables. Al montar una placa nueva, componentes vinculados a la placa anterior (pantalla, cámara o batería) pueden reflejar aviso de <em>"Pieza desconocida"</em> en Ajustes de iOS. Todas las placas se entregan 100% funcionales y con Face ID sincronizado.
+          </div>
+        </div>
+      )}
+
       {/* 1. Vista Móvil (Tarjetas Nativas) */}
       <div className="md:hidden space-y-3">
         {filteredServices.length === 0 ? (
