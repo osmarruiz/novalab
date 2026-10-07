@@ -51,10 +51,11 @@ export default function LabPriceCatalog() {
         </div>
 
         {/* Modality Filter Pills (Remoto vs Presencial) */}
-        <div className="flex items-center gap-1.5 p-1 rounded-lg bg-zinc-900 border border-zinc-800 overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-1.5 p-1 rounded-lg bg-zinc-900 border border-zinc-800 overflow-x-auto scrollbar-none touch-pan-x">
           <button
+            type="button"
             onClick={() => setSelectedModality('all')}
-            className={`px-2.5 py-1 text-xs font-mono font-medium rounded-md whitespace-nowrap transition-all ${
+            className={`px-3 py-1.5 text-xs font-mono font-medium rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
               selectedModality === 'all'
                 ? 'bg-zinc-800 text-zinc-100'
                 : 'text-zinc-400 hover:text-zinc-200'
@@ -63,26 +64,28 @@ export default function LabPriceCatalog() {
             Todos
           </button>
           <button
+            type="button"
             onClick={() => setSelectedModality('remote')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
               selectedModality === 'remote'
                 ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
-            <MonitorCheck className="size-3 text-sky-400" />
-            <span>Remoto</span>
+            <MonitorCheck className="size-3 text-sky-400 pointer-events-none" />
+            <span className="pointer-events-none">Remoto</span>
           </button>
           <button
+            type="button"
             onClick={() => setSelectedModality('lab')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-all ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
               selectedModality === 'lab'
                 ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
                 : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
-            <MapPin className="size-3 text-purple-400" />
-            <span>Presencial</span>
+            <MapPin className="size-3 text-purple-400 pointer-events-none" />
+            <span className="pointer-events-none">Presencial</span>
           </button>
         </div>
 
@@ -108,22 +111,23 @@ export default function LabPriceCatalog() {
       </div>
 
       {/* Tabs por Categoría */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none touch-pan-x">
         {categories.map((cat) => {
           const IconComp = cat.icon;
           const isActive = selectedCategory === cat.id;
           return (
             <button
+              type="button"
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border ${
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-transform active:scale-95 border cursor-pointer select-none ${
                 isActive
                   ? 'bg-purple-950/60 border-purple-500/60 text-purple-300 shadow-sm'
                   : 'bg-zinc-900/40 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850'
               }`}
             >
-              <IconComp className={`size-3.5 ${isActive ? 'text-purple-400' : 'text-zinc-500'}`} />
-              <span>{cat.label}</span>
+              <IconComp className={`size-3.5 pointer-events-none ${isActive ? 'text-purple-400' : 'text-zinc-500'}`} />
+              <span className="pointer-events-none">{cat.label}</span>
             </button>
           );
         })}
