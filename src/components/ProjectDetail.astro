@@ -1,0 +1,60 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+import { getProject, getProjectTranslation } from "../data/projects";
+import ProjectFeatures from "./project/ProjectFeatures.astro";
+import ProjectMedia from "./project/ProjectMedia.astro";
+
+interface Props {
+    slug: string;
+}
+
+const { slug } = Astro.props;
+const lang = getLangFromUrl(Astro.url) as "es" | "en";
+
+const project = getProject(slug);
+const translation = getProjectTranslation(slug, lang);
+
+if (!project || !translation) {
+    return Astro.redirect("/404");
+}
+
+const { content } = translation;
+const featuresLabel = lang === "es" ? "Características Destacadas" : "Key Features";
+const demoLabel = lang === "es" ? "Demostración" : "Demo";
+const galleryLabel = lang === "es" ? "Galería" : "Gallery";
+---
+
+<div class="project-detail-layout">
+    <!-- 1. Media Showcase (Carousel / Video) -->
+    <ProjectMedia
+        videoUrl={project.videoUrl}
+        gallery={project.gallery}
+        img={project.img}
+        demoLabel={demoLabel}
+        galleryLabel={galleryLabel}
+        projectTitle={translation.title}
+    />
+
+    <!-- 2. Features Grid -->
+    {content.features && content.features.length > 0 && (
+        <ProjectFeatures
+            features={content.features}
+            label={featuresLabel}
+        />
+    )}
+</div>
+
+<style>
+    .project-detail-layout {
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
+        width: 100%;
+    }
+</style>
+
+
+
+
+
+

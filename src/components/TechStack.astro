@@ -1,0 +1,149 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const title = lang === "es" ? "Stack Tecnológico" : "Core Tech Stack";
+const description =
+    lang === "es"
+        ? "Tecnologías y herramientas con las que diseño arquitecturas escalables, desarrollo software empresarial y automatizo infraestructura en la nube."
+        : "Technologies and tools I leverage to engineer scalable architectures, build production software, and automate cloud infrastructure.";
+
+const techCategories = [
+    {
+        name: lang === "es" ? "Backend & Core" : "Backend & Core",
+        items: [".NET / C#", "Java", "Spring Boot", "TypeScript", "Python", "Go"],
+    },
+    {
+        name: lang === "es" ? "Cloud & DevOps" : "Cloud & DevOps",
+        items: ["Kubernetes", "Docker", "AWS", "Terraform", "Ansible", "CI/CD"],
+    },
+    {
+        name: lang === "es" ? "Bases de Datos & Telemetría" : "Databases & Observability",
+        items: ["PostgreSQL", "ClickHouse", "Kafka", "Redis / Valkey", "Prometheus", "Grafana"],
+    },
+];
+---
+
+<section class="tech-stack-section">
+    <div class="tech-header">
+        <h2 class="tech-title">{title}</h2>
+        <p class="tech-desc">{description}</p>
+    </div>
+
+    <div class="tech-grid">
+        {techCategories.map((cat) => (
+            <div class="tech-card">
+                <h3 class="category-name">{cat.name}</h3>
+                <div class="pills-wrap">
+                    {cat.items.map((tech) => (
+                        <span class="tech-pill">{tech}</span>
+                    ))}
+                </div>
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    .tech-stack-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+    }
+
+    @media (min-width: 50em) {
+        .tech-stack-section {
+            gap: 2rem;
+        }
+    }
+
+    .tech-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .tech-title {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .tech-desc {
+        color: var(--on-surface-variant);
+        font-size: var(--text-md);
+        max-width: 65ch;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .tech-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    @media (min-width: 50em) {
+        .tech-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+    }
+
+    .tech-card {
+        background-color: var(--surface-container-low);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .tech-card:hover {
+        background-color: var(--surface-container-highest);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-ambient);
+    }
+
+    .category-name {
+        font-size: var(--text-sm);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .pills-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tech-pill {
+        display: inline-block;
+        padding: 0.35rem 0.8rem;
+        border-radius: 9999px;
+        background-color: var(--surface-container);
+        color: var(--on-surface-variant);
+        font-size: var(--text-xs, 0.8rem);
+        font-weight: 600;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+    }
+
+    .tech-card:hover .tech-pill {
+        color: var(--on-surface);
+        background-color: var(--surface-container-high);
+    }
+</style>

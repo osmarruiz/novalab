@@ -1,0 +1,171 @@
+---
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang = "en" } = Astro.props;
+const isEs = lang === "es";
+---
+
+<section id="contact" class="w-full py-12 border-t border-[#ffffff10] text-[var(--white)]">
+  <div class="max-w-5xl mx-auto space-y-8">
+    <div class="space-y-2">
+      <h2 class="text-sm font-semibold tracking-wider uppercase text-[var(--sec)] shiny-sec">
+        {isEs ? "Oportunidades & Discusión Técnica" : "Opportunities & Technical Inquiries"}
+      </h2>
+      <h3 class="text-3xl md:text-5xl font-medium text-[var(--white)]">
+        {isEs ? "¿Buscas un Ingeniero DevOps o Backend?" : "Hiring a DevOps or Backend Engineer?"}
+      </h3>
+      <p class="text-[var(--white-icon)] text-base md:text-lg max-w-2xl leading-relaxed">
+        {isEs 
+          ? "Disponible para roles remotos de tiempo completo o contratos especializados en DevOps, Cloud Infrastructure (AWS/K8s) y desarrollo backend (.NET/Go/Python). También abierto a sinergias técnicas sobre Nova Ticket SaaS."
+          : "Open to remote full-time or contract roles in DevOps, Cloud Infrastructure (AWS/K8s), and backend engineering (.NET/Go/Python). Also open to technical discussions and partnerships around Nova Ticket SaaS."}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
+      <!-- Left side: Core Capabilities & Direct Channels -->
+      <div class="space-y-6">
+        <div class="p-5 rounded-2xl bg-[#14141460] border border-[var(--white-icon-tr)] space-y-3">
+          <h4 class="text-xs font-semibold text-[var(--sec)] uppercase tracking-wider">
+            {isEs ? "Capacidades de Entrega & Enfoque" : "Core Capabilities & Focus"}
+          </h4>
+          <ul class="text-xs md:text-sm text-[var(--white-icon)] space-y-2.5">
+            <li class="flex items-start gap-2.5">
+              <span class="text-[var(--sec)] font-mono text-xs mt-0.5 shrink-0">❯</span>
+              <span>{isEs ? "Infraestructura Cloud resiliente (AWS, Kubernetes, Terraform IaC, Docker)" : "Resilient Cloud Infrastructure (AWS, Kubernetes, Terraform IaC, Docker)"}</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-[var(--sec)] font-mono text-xs mt-0.5 shrink-0">❯</span>
+              <span>{isEs ? "Pipelines CI/CD automatizados, observabilidad y GitOps (GitHub Actions, Prometheus)" : "Automated CI/CD pipelines, observability & GitOps (GitHub Actions, Prometheus)"}</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-[var(--sec)] font-mono text-xs mt-0.5 shrink-0">❯</span>
+              <span>{isEs ? "Backends concurrentes de misión crítica (.NET 8, Go, Python, Kafka, PostgreSQL)" : "Mission-critical concurrent backends (.NET 8, Go, Python, Kafka, PostgreSQL)"}</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="text-[var(--sec)] font-mono text-xs mt-0.5 shrink-0">❯</span>
+              <span>{isEs ? "Operación SaaS en producción activa (creador y arquitecto de Nova Ticket)" : "Active production SaaS operations (creator & architect of Nova Ticket)"}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- WhatsApp Card -->
+          <a
+            href={isEs ? "https://wa.me/50582228647?text=Hola%20Osmar,%20vi%20tu%20perfil%20DevOps%20y%20me%20gustar%C3%ADa%20conversar." : "https://wa.me/50582228647?text=Hi%20Osmar,%20I%20saw%20your%20DevOps%20profile%20and%20would%20like%20to%20connect."}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 p-4 rounded-2xl bg-[#1414149c] border border-[var(--white-icon-tr)] hover:border-[#25D366]/50 hover:bg-[#25D366]/5 transition duration-300 group"
+          >
+            <div class="size-10 rounded-xl bg-[#25D366]/10 text-[#25D366] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                <path d="M12.004 2C6.48 2 2 6.48 2 12.004C2 13.77 2.463 15.467 3.342 16.992L2.054 21.701L6.903 20.432C8.389 21.247 10.147 21.708 12.004 21.708C17.528 21.708 22.008 17.228 22.008 11.704C22.008 6.18 17.528 2 12.004 2ZM16.914 15.42C16.711 15.992 15.908 16.46 15.26 16.6C14.817 16.696 14.238 16.772 12.296 15.968C9.813 14.94 8.214 12.419 8.09 12.256C7.969 12.093 7.085 10.92 7.085 9.708C7.085 8.496 7.702 7.907 7.945 7.659C8.148 7.452 8.472 7.371 8.796 7.371C8.902 7.371 8.999 7.376 9.088 7.38C9.348 7.393 9.478 7.408 9.648 7.818C9.859 8.329 10.37 9.58 10.435 9.71C10.5 9.84 10.557 10.011 10.468 10.182C10.379 10.352 10.314 10.442 10.184 10.596C10.054 10.751 9.917 10.938 9.803 11.052C9.673 11.182 9.535 11.32 9.689 11.588C9.843 11.856 10.379 12.731 11.166 13.433C12.18 14.337 13.008 14.629 13.308 14.755C13.535 14.852 13.803 14.828 13.965 14.657C14.176 14.43 14.436 14.057 14.704 13.684C14.899 13.408 15.142 13.375 15.394 13.473C15.653 13.562 17.032 14.244 17.316 14.382C17.6 14.52 17.787 14.585 17.852 14.707C17.917 14.828 17.917 15.42 17.714 15.992H16.914Z"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <span class="text-xs text-[var(--white-icon)] block">WhatsApp</span>
+              <strong class="text-xs font-semibold text-white truncate block">+505 8222 8647</strong>
+            </div>
+          </a>
+
+          <!-- Email Card -->
+          <a
+            href="mailto:contact@osmarruiz.com"
+            class="flex items-center gap-3 p-4 rounded-2xl bg-[#1414149c] border border-[var(--white-icon-tr)] hover:border-[var(--sec)]/50 hover:bg-[var(--sec)]/5 transition duration-300 group"
+          >
+            <div class="size-10 rounded-xl bg-[var(--sec)]/10 text-[var(--sec)] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
+                <path d="m18.73 5.41l-1.28 1L12 10.46L6.55 6.37l-1.28-1A2 2 0 0 0 2 7.05v11.59A1.36 1.36 0 0 0 3.36 20h3.19v-7.72L12 16.37l5.45-4.09V20h3.19A1.36 1.36 0 0 0 22 18.64V7.05a2 2 0 0 0-3.27-1.64"/>
+              </svg>
+            </div>
+            <div class="min-w-0">
+              <span class="text-xs text-[var(--white-icon)] block">Email</span>
+              <strong class="text-xs font-semibold text-white truncate block">contact@osmarruiz.com</strong>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side: Quick Composer with mailto action -->
+      <div>
+        <form
+          id="direct-message-form"
+          class="flex flex-col gap-3.5 bg-[#14141460] p-6 rounded-2xl border border-[var(--white-icon-tr)]"
+        >
+          <div>
+            <label class="block text-xs font-medium text-[var(--white-icon)] mb-1">
+              {isEs ? "Tipo de Oportunidad / Asunto" : "Opportunity Type / Subject"}
+            </label>
+            <input
+              type="text"
+              id="msg-subject"
+              placeholder={isEs ? "Ej: Rol DevOps Remoto / Backend / Nova Ticket" : "e.g., Remote DevOps / Backend Role / Nova Ticket"}
+              required
+              class="w-full px-4 py-2.5 bg-[#141414] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)] transition text-sm"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-[var(--white-icon)] mb-1">
+              {isEs ? "Detalles del equipo, posición o requerimiento" : "Team, role, or technical details"}
+            </label>
+            <textarea
+              id="msg-body"
+              placeholder={isEs ? "Comparte detalles sobre tu equipo, stack tecnológico o la posición..." : "Share details about your team, tech stack, or the role..."}
+              rows="4"
+              required
+              class="w-full px-4 py-2.5 bg-[#141414] text-[var(--white)] border border-[var(--white-icon-tr)] rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--sec)] resize-none transition text-sm"
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2 pt-1">
+            <button
+              type="submit"
+              class="flex-1 px-4 py-3 bg-[var(--sec)] text-black font-semibold rounded-xl hover:opacity-90 transition cursor-pointer flex items-center justify-center gap-2 text-sm shadow-lg shadow-[var(--sec)]/20"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              {isEs ? "Enviar por Correo" : "Send via Email"}
+            </button>
+            <button
+              type="button"
+              id="btn-send-whatsapp"
+              class="px-4 py-3 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 font-semibold rounded-xl hover:bg-[#25D366]/20 transition cursor-pointer flex items-center justify-center gap-2 text-sm"
+            >
+              {isEs ? "Por WhatsApp" : "Via WhatsApp"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupContact() {
+    const form = document.getElementById("direct-message-form") as HTMLFormElement;
+    const btnWhatsapp = document.getElementById("btn-send-whatsapp");
+    const subjectInput = document.getElementById("msg-subject") as HTMLInputElement;
+    const bodyInput = document.getElementById("msg-body") as HTMLTextAreaElement;
+
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const subject = encodeURIComponent(subjectInput?.value || "Contacto Profesional DevOps / Backend");
+      const body = encodeURIComponent(bodyInput?.value || "");
+      window.location.href = `mailto:contact@osmarruiz.com?subject=${subject}&body=${body}`;
+    });
+
+    btnWhatsapp?.addEventListener("click", () => {
+      const subject = subjectInput?.value ? `[${subjectInput.value}] ` : "";
+      const body = bodyInput?.value || "Hola Osmar, vi tu perfil DevOps / Backend y me gustaría conectar.";
+      const text = encodeURIComponent(`${subject}${body}`);
+      window.open(`https://wa.me/50582228647?text=${text}`, "_blank");
+    });
+  }
+
+  setupContact();
+  document.addEventListener("astro:page-load", setupContact);
+</script>

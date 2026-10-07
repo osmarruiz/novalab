@@ -1,0 +1,87 @@
+---
+import Icon from "./Icon.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="box skills">
+	<div class="stack gap-2 lg:gap-4" data-aos="fade-up" data-aos-delay="0">
+		<Icon
+			icon="terminal-window"
+			color="var(--on-surface-variant)"
+			size="2.5rem"
+		/>
+		<h2>{t("skills.webdev.title")}</h2>
+		<p>{t("skills.webdev.description")}</p>
+	</div>
+	<div class="stack gap-2 lg:gap-4" data-aos="fade-up" data-aos-delay="100">
+		<Icon
+			icon="rocket-launch"
+			color="var(--on-surface-variant)"
+			size="2.5rem"
+		/>
+		<h2>{t("skills.learning.title")}</h2>
+		<p>{t("skills.learning.description")}</p>
+	</div>
+	<div class="stack gap-2 lg:gap-4" data-aos="fade-up" data-aos-delay="200">
+		<Icon
+			icon="strategy"
+			color="var(--on-surface-variant)"
+			size="2.5rem"
+		/>
+		<h2>{t("skills.collaboration.title")}</h2>
+		<p>{t("skills.collaboration.description")}</p>
+	</div>
+</section>
+
+<style>
+	.box {
+		border: 0;
+		border-radius: 0.75rem;
+		padding: 1.5rem;
+		background-color: var(--surface-container-low);
+		transition:
+			transform 0.4s ease,
+			box-shadow 0.4s ease,
+			background-color 0.4s ease;
+	}
+
+	.box:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-ambient);
+		background-color: var(--surface-container-highest);
+	}
+
+	.skills {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.skills h2 {
+		font-size: var(--text-lg);
+	}
+
+	.skills p {
+		color: var(--on-surface-variant);
+	}
+
+	@media (min-width: 58em) {
+		.box {
+			border-radius: 1.5rem;
+			padding: 2.5rem;
+		}
+
+		.skills {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 5rem;
+		}
+
+		.skills h2 {
+			font-size: var(--text-2xl);
+		}
+	}
+</style>

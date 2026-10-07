@@ -1,0 +1,81 @@
+---
+import "../styles/global.css";
+import { getLangFromUrl } from "../i18n/utils";
+
+interface Props {
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+}
+
+const {
+  title = "Osmar Ruiz | Software Engineer",
+  description = "Portafolio profesional de Osmar Ruiz - Software Engineer especializado en aplicaciones web, backend y arquitectura de software.",
+  image = "/assets/profile/profile.jpg",
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+const imageUrl = new URL(image, Astro.site || Astro.url.origin);
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content="Osmar Ruiz" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content={lang === "es" ? "es_ES" : "en_US"} />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={title} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<script is:inline>
+  const applyTheme = () => {
+    const theme = (() => {
+      if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+        return localStorage.getItem("theme");
+      }
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    })();
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("theme-dark");
+    } else {
+      document.documentElement.classList.remove("theme-dark");
+    }
+  };
+
+  // Initial load
+  applyTheme();
+
+  // On page transitions
+  document.addEventListener('astro:after-swap', applyTheme);
+</script>

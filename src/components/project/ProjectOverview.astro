@@ -1,0 +1,94 @@
+---
+interface Props {
+    overview: string;
+    quote?: string;
+    label: string;
+}
+
+const { overview, quote, label } = Astro.props;
+
+const formattedOverview = overview
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="link">$1</a>')
+    .replace(/(?<!["'])(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="link">$1</a>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+---
+
+<section class="overview-box" data-aos="fade-up">
+    <h2 class="section-title">{label}</h2>
+    <p class="overview-text" set:html={formattedOverview} />
+
+    {quote && (
+        <blockquote class="quote">
+            <p>{quote}</p>
+        </blockquote>
+    )}
+</section>
+
+<style>
+    .overview-box {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.75rem;
+        background-color: var(--surface-container-low);
+        border-radius: 0.75rem;
+        transition: background-color 0.3s ease;
+    }
+
+    @media (min-width: 50em) {
+        .overview-box {
+            padding: 2.5rem;
+            border-radius: 1.25rem;
+            gap: 2rem;
+        }
+    }
+
+    .section-title {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .overview-text {
+        font-size: var(--text-md, 1.125rem);
+        line-height: 1.8;
+        color: var(--on-surface-variant);
+        margin: 0;
+    }
+
+    .overview-text :global(strong) {
+        color: var(--on-surface);
+        font-weight: 700;
+    }
+
+    .overview-text :global(.link) {
+        color: var(--on-surface);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-decoration-color: var(--on-surface-variant);
+        font-weight: 600;
+        transition: text-decoration-color 0.2s ease, color 0.2s ease;
+    }
+
+    .overview-text :global(.link:hover) {
+        text-decoration-color: var(--on-surface);
+    }
+
+    .quote {
+        margin: 0;
+        padding: 1.25rem 1.5rem;
+        background-color: var(--surface-container);
+        border-left: 3px solid var(--on-surface);
+        border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    .quote p {
+        font-style: italic;
+        font-size: var(--text-md);
+        color: var(--on-surface);
+        line-height: 1.6;
+        margin: 0;
+    }
+</style>

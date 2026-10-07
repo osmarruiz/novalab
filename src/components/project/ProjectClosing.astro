@@ -1,0 +1,39 @@
+---
+interface Props {
+    closing: string;
+}
+
+const { closing } = Astro.props;
+---
+
+<footer class="closing-box" data-aos="fade-up">
+    <p>{closing}</p>
+</footer>
+
+<style>
+    .closing-box {
+        padding: 2.25rem;
+        background-color: var(--surface-container-low);
+        border-radius: 0.75rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (min-width: 50em) {
+        .closing-box {
+            padding: 3rem;
+            border-radius: 1.25rem;
+        }
+    }
+
+    .closing-box p {
+        font-size: var(--text-lg);
+        font-weight: 600;
+        color: var(--on-surface);
+        max-width: 52ch;
+        margin: 0;
+        line-height: 1.6;
+    }
+</style>

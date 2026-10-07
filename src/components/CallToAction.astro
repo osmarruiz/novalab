@@ -1,0 +1,79 @@
+---
+interface Props {
+	href: string;
+	download?: string;
+	target?: string;
+	rel?: string;
+}
+
+const { href, download, target, rel } = Astro.props;
+---
+
+<a href={href} download={download} target={target} rel={rel}><slot /></a>
+
+<style>
+	a {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 0.75rem 1.85rem;
+		gap: 0.65rem;
+		color: var(--on-primary);
+		font-family: var(--font-body);
+		font-weight: 700;
+		text-decoration: none;
+		line-height: 1.1;
+		border-radius: 9999px;
+		overflow: hidden;
+		background: var(--gradient-accent);
+		border: 1px solid var(--btn-border);
+		box-shadow: var(--btn-shadow);
+		white-space: nowrap;
+		transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	a:hover,
+	a:focus {
+		transform: translateY(-2px) scale(1.02);
+		box-shadow: var(--btn-shadow-hover);
+		color: var(--on-primary);
+	}
+
+	a:active {
+		transform: translateY(0) scale(0.99);
+	}
+
+	@media (min-width: 20em) {
+		a {
+			font-size: var(--text-lg);
+		}
+	}
+
+	/* Overlay for hover effects. */
+	a::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		transition:
+			background-color 0.3s ease,
+			opacity 0.3s ease;
+		mix-blend-mode: overlay;
+		opacity: 0;
+	}
+
+	a:focus::after,
+	a:hover::after {
+		background-color: hsla(0, 0%, 100%, 0.1);
+		opacity: 1;
+	}
+
+	@media (min-width: 50em) {
+		a {
+			padding: 1.125rem 2.5rem;
+			font-size: var(--text-xl);
+		}
+	}
+</style>

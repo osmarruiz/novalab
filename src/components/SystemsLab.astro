@@ -1,0 +1,291 @@
+---
+import { getLangFromUrl } from "../i18n/utils";
+
+interface Props {
+  lang?: "en" | "es";
+}
+
+const { lang: propLang } = Astro.props;
+const currentLang = propLang || getLangFromUrl(Astro.url);
+
+const isEs = currentLang === "es";
+
+const defaultModes = isEs
+  ? [
+      {
+        id: "microservices",
+        label: "Event-Driven & Microservices",
+        caption: "API Gateway, Kafka, Worker, Postgres, Cache",
+        nodes: ["API Gateway", "Kafka Event", ".NET Worker", "PostgreSQL", "Redis Cache"],
+        stat: ["< 45ms", "latencia p99"],
+        note: "Arquitectura asíncrona desacoplada con procesamiento distribuido de eventos y consistencia eventual.",
+      },
+      {
+        id: "gitops",
+        label: "GitOps & Kubernetes CI/CD",
+        caption: "Push, GitHub Actions, Docker, K8s, Grafana",
+        nodes: ["Git Push", "CI Pipelines", "Docker Image", "K8s Cluster", "Telemetría"],
+        stat: ["99.99%", "disponibilidad SLA"],
+        note: "Despliegue declarativo automatizado con autoscaling, zero-downtime y observabilidad en tiempo real.",
+      },
+      {
+        id: "ai-agents",
+        label: "RAG & AI Agent Workflow",
+        caption: "Query, Hybrid Search, Reranker, LLM, Validation",
+        nodes: ["Consulta", "Búsqueda Híbrida", "Reranker", "LLM Engine", "Guardrail"],
+        stat: ["+38%", "precisión evaluada"],
+        note: "Orquestación de modelos y pipelines RAG anclados a bases de datos vectoriales con validación estricta.",
+      },
+    ]
+  : [
+      {
+        id: "microservices",
+        label: "Event-Driven & Microservices",
+        caption: "API Gateway, Kafka, Worker, Postgres, Cache",
+        nodes: ["API Gateway", "Kafka Event", ".NET Worker", "PostgreSQL", "Redis Cache"],
+        stat: ["< 45ms", "p99 latency"],
+        note: "Decoupled asynchronous architecture with distributed event processing and resilient caching.",
+      },
+      {
+        id: "gitops",
+        label: "GitOps & Kubernetes CI/CD",
+        caption: "Push, GitHub Actions, Docker, K8s, Grafana",
+        nodes: ["Git Push", "CI Pipelines", "Docker Image", "K8s Cluster", "Telemetry"],
+        stat: ["99.99%", "uptime SLA"],
+        note: "Automated declarative delivery with autoscaling, zero-downtime rollouts, and real-time telemetry.",
+      },
+      {
+        id: "ai-agents",
+        label: "RAG & AI Agent Workflow",
+        caption: "Query, Hybrid Search, Reranker, LLM, Validation",
+        nodes: ["Query", "Hybrid Search", "Reranker", "LLM Engine", "Guardrail"],
+        stat: ["+38%", "evaluated precision"],
+        note: "Model orchestration and RAG retrieval grounded in verified databases with strict validation checkpoints.",
+      },
+    ];
+
+const title = isEs ? "Laboratorio de Sistemas" : "Systems Lab";
+const kicker = isEs ? "Arquitectura Interactiva" : "Systems Architecture";
+const subtitle = isEs
+  ? "Explora cómo fluyen los datos, la infraestructura y el control en sistemas distribuidos y pipelines de producción."
+  : "Explore how data, infrastructure, and validation flow through production distributed systems.";
+const replayText = isEs ? "Reiniciar" : "Replay";
+const statusText = isEs ? "sistema en línea" : "system online";
+---
+
+<section class="py-12 border-t border-[#ffffff10] text-[var(--white)]" id="lab" aria-labelledby="lab-title">
+  <div class="max-w-5xl mx-auto space-y-8">
+    <div class="space-y-2">
+      <h2 class="text-lg text-[var(--sec)] shiny-sec font-medium">{kicker}</h2>
+      <h3 id="lab-title" class="text-4xl md:text-5xl font-medium">{title}</h3>
+      <p class="text-[var(--white-icon)] text-base md:text-lg max-w-2xl">{subtitle}</p>
+    </div>
+
+    <div class="lab-shell bg-[#14141460] border border-[var(--white-icon-tr)] rounded-2xl p-4 md:p-6" data-ai-lab data-lab-modes={JSON.stringify(defaultModes)}>
+      <div class="lab-tabs flex flex-col gap-2" role="tablist" aria-label="Explore system simulations" data-lab-tablist>
+        {
+          defaultModes.map((mode, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`lab-tab-${mode.id}`}
+              aria-controls="lab-panel"
+              aria-selected={index === 0 ? "true" : "false"}
+              tabindex={index === 0 ? 0 : -1}
+              data-lab-tab={mode.id}
+              class={`lab-tab-btn flex items-start gap-3 p-4 rounded-xl border border-transparent bg-[#1414149c] hover:bg-white/5 transition text-left cursor-pointer w-full ${index === 0 ? "is-active border-[var(--sec)]/40 bg-white/5" : ""}`}
+            >
+              <span class="text-xs font-bold text-[var(--sec)] bg-white/5 px-2 py-1 rounded">0{index + 1}</span>
+              <div class="flex flex-col gap-0.5">
+                <strong class="text-sm font-semibold text-[var(--white)]">{mode.label}</strong>
+                <small class="text-xs text-[var(--white-icon)]">{mode.caption}</small>
+              </div>
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="lab-canvas bg-[#101010] border border-[var(--white-icon-tr)] rounded-xl p-5 flex flex-col gap-5 outline-none" id="lab-panel" role="tabpanel" aria-labelledby={`lab-tab-${defaultModes[0].id}`} tabindex="0" data-lab-panel>
+        <div class="flex items-center justify-between text-xs text-[var(--white-icon)] border-b border-white/5 pb-3">
+          <span class="inline-flex items-center gap-2 font-medium uppercase tracking-wider">
+            <span class="size-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]"></span> {statusText}
+          </span>
+          <span class="opacity-60 hidden sm:inline">distributed architecture / v1.0</span>
+          <button type="button" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[var(--white)] border border-white/10 transition cursor-pointer" data-lab-replay aria-label="Replay simulation">
+            {replayText}
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="lab-stage relative flex flex-col justify-between gap-6 min-h-[260px] py-2" data-lab-stage>
+          <div class="lab-grid-pattern absolute inset-0 opacity-20 pointer-events-none" aria-hidden="true"></div>
+
+          <div class="lab-nodes grid grid-cols-2 sm:grid-cols-5 gap-2.5 relative z-10" data-lab-nodes>
+            {
+              defaultModes[0].nodes.map((node, i) => (
+                <div class="lab-node bg-[#181818] border border-white/10 rounded-lg p-3 flex flex-col items-center text-center gap-1 relative shadow-sm" style={`--node-i: ${i};`}>
+                  <span class="text-[0.65rem] font-bold text-[var(--white-icon)]">0{i + 1}</span>
+                  <strong class="text-xs font-semibold text-[var(--white)]">{node}</strong>
+                  <span class="node-pulse" aria-hidden="true" />
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="lab-signal-track relative h-1 bg-white/10 my-2 overflow-hidden rounded-full" aria-hidden="true">
+            <div class="lab-signal absolute top-0 -left-1/4 w-1/3 h-full bg-gradient-to-r from-transparent via-[var(--sec)] to-transparent"></div>
+          </div>
+
+          <div class="flex items-baseline gap-2 z-10">
+            <span class="text-3xl font-extrabold text-[var(--white)] tracking-tight" data-lab-stat>{defaultModes[0].stat[0]}</span>
+            <small class="text-xs font-semibold uppercase tracking-wider text-[var(--sec)]" data-lab-stat-label>{defaultModes[0].stat[1]}</small>
+          </div>
+
+          <p class="text-xs sm:text-sm text-[var(--white-icon)] leading-relaxed z-10 pt-2 border-t border-dashed border-white/10 m-0" data-lab-note>{defaultModes[0].note}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initLab() {
+    document.querySelectorAll("[data-ai-lab]:not([data-ready])").forEach((container) => {
+      const el = container as HTMLElement;
+      el.dataset.ready = "true";
+
+      const modesData = JSON.parse(el.dataset.labModes || "[]");
+      const tablist = el.querySelector("[data-lab-tablist]");
+      const panel = el.querySelector("[data-lab-panel]");
+      const tabs = Array.from(el.querySelectorAll("[data-lab-tab]")) as HTMLButtonElement[];
+      const nodesContainer = el.querySelector("[data-lab-nodes]");
+      const stage = el.querySelector("[data-lab-stage]");
+      const statEl = el.querySelector("[data-lab-stat]");
+      const statLabelEl = el.querySelector("[data-lab-stat-label]");
+      const noteEl = el.querySelector("[data-lab-note]");
+      const replayBtn = el.querySelector("[data-lab-replay]");
+
+      if (!tablist || !panel || !nodesContainer || !stage || !statEl || !statLabelEl || !noteEl) {
+        return;
+      }
+
+      const switchMode = (modeId: string) => {
+        const mode = modesData.find((m: any) => m.id === modeId) || modesData[0];
+        
+        tabs.forEach((tab) => {
+          const isActive = tab.dataset.labTab === mode.id;
+          tab.setAttribute("aria-selected", String(isActive));
+          tab.tabIndex = isActive ? 0 : -1;
+          tab.classList.toggle("is-active", isActive);
+          tab.classList.toggle("border-[var(--sec)]/40", isActive);
+          tab.classList.toggle("bg-white/5", isActive);
+        });
+
+        nodesContainer.innerHTML = mode.nodes
+          .map(
+            (nodeName: string, idx: number) => `
+            <div class="lab-node bg-[#181818] border border-white/10 rounded-lg p-3 flex flex-col items-center text-center gap-1 relative shadow-sm" style="--node-i: ${idx};">
+              <span class="text-[0.65rem] font-bold text-[var(--white-icon)]">0${idx + 1}</span>
+              <strong class="text-xs font-semibold text-[var(--white)]">${nodeName}</strong>
+              <span class="node-pulse" aria-hidden="true"></span>
+            </div>`
+          )
+          .join("");
+
+        statEl.textContent = mode.stat[0];
+        statLabelEl.textContent = mode.stat[1];
+        noteEl.textContent = mode.note;
+        panel.setAttribute("aria-labelledby", `lab-tab-${mode.id}`);
+
+        stage.classList.remove("is-running");
+        void (stage as HTMLElement).offsetWidth;
+        stage.classList.add("is-running");
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          if (tab.dataset.labTab) switchMode(tab.dataset.labTab);
+        });
+      });
+
+      replayBtn?.addEventListener("click", () => {
+        stage.classList.remove("is-running");
+        void (stage as HTMLElement).offsetWidth;
+        stage.classList.add("is-running");
+      });
+
+      stage.classList.add("is-running");
+    });
+  }
+
+  initLab();
+  document.addEventListener("astro:page-load", initLab);
+</script>
+
+<style>
+  @media (min-width: 60em) {
+    .lab-shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .lab-grid-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .lab-stage.is-running .lab-node {
+    animation: nodeHighlight 2.5s ease-in-out infinite;
+    animation-delay: calc(var(--node-i) * 0.45s);
+  }
+
+  @keyframes nodeHighlight {
+    0%, 100% {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(0);
+    }
+    30% {
+      border-color: var(--sec, #a476ff);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(164, 118, 255, 0.25);
+    }
+    60% {
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(0);
+    }
+  }
+
+  .node-pulse {
+    position: absolute;
+    bottom: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sec, #a476ff);
+    opacity: 0;
+  }
+
+  .lab-stage.is-running .node-pulse {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+    animation-delay: calc(var(--node-i) * 0.45s);
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0; transform: scale(0.8); }
+    30% { opacity: 1; transform: scale(1.4); }
+    60% { opacity: 0; transform: scale(0.8); }
+  }
+
+  .lab-stage.is-running .lab-signal {
+    animation: travelSignal 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes travelSignal {
+    0% { left: -25%; }
+    100% { left: 105%; }
+  }
+</style>

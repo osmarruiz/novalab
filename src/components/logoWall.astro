@@ -1,0 +1,65 @@
+---
+const technologies = [
+  { name: ".NET", file: "dotnet" },
+  { name: "Go", file: "go" },
+  { name: "AWS", file: "aws" },
+  { name: "Terraform", file: "terraform" },
+  { name: "Ansible", file: "ansible" },
+  { name: "Docker", file: "docker" },
+  { name: "Kubernetes", file: "kubernetes" },
+  { name: "PostgreSQL", file: "postgresql" },
+  { name: "TypeScript", file: "typeScript" },
+  { name: "React", file: "react" },
+  { name: "Supabase", file: "supabase" },
+  { name: "Bash", file: "bash" },
+];
+---
+
+<div class="relative overflow-x-hidden py-8">
+  <div class="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[var(--background)] to-transparent z-20"></div>
+
+  <div class="flex animate-scroll w-max will-change-transform">
+    {
+      [...technologies, ...technologies].map((tech, index) => (
+        <div 
+          class="flex items-center gap-3 pr-12 md:pr-16 group transition-all duration-300"
+          aria-hidden={index >= technologies.length ? "true" : "false"}
+        >
+          <img
+            src={`/svg/${tech.file}.svg`}
+            alt={tech.name}
+            class="h-7 w-7 object-contain transition-transform group-hover:scale-110 opacity-80 group-hover:opacity-100"
+            width="28"
+            height="28"
+            loading={index < technologies.length ? "eager" : "lazy"}
+            decoding="async"
+          />
+          <span class="text-base md:text-lg font-medium text-[var(--white-icon)] group-hover:text-white whitespace-nowrap transition-colors">
+            {tech.name}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style is:global>
+  @keyframes scroll {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  .animate-scroll {
+    animation: scroll 35s linear infinite;
+  }
+
+  @media (min-width: 768px) {
+    .animate-scroll {
+      animation-duration: 30s;
+    }
+  }
+</style>

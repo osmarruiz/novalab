@@ -1,0 +1,91 @@
+---
+import Icon from "./Icon.astro";
+import CallToAction from "./CallToAction.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const whatsappMessage = encodeURIComponent(
+    lang === "es"
+        ? "Hola Osmar, vi tu portafolio y me gustaría conversar sobre una oportunidad/proyecto."
+        : "Hi Osmar, I saw your portfolio and would like to talk about an opportunity/project."
+);
+
+const whatsappUrl = `https://wa.me/50582228647?text=${whatsappMessage}`;
+---
+
+<aside class="contact-cta-box">
+    <div class="cta-content">
+        <h2>{t("contact.cta.title")}</h2>
+        <p>{t("contact.cta.description")}</p>
+    </div>
+    <div class="cta-action">
+        <CallToAction href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+            <Icon icon="whatsapp-logo" size="1.25em" />
+            <span>{t("contact.cta.button")}</span>
+        </CallToAction>
+    </div>
+</aside>
+
+<style>
+    .contact-cta-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
+        padding: 2.5rem 1.75rem;
+        background-color: var(--surface-container-low);
+        border-radius: 1rem;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--shadow-ambient);
+        margin-top: 2rem;
+    }
+
+    .cta-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-width: 50ch;
+    }
+
+    .cta-content h2 {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .cta-content p {
+        font-size: var(--text-md);
+        color: var(--on-surface-variant);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .cta-action {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (min-width: 50em) {
+        .contact-cta-box {
+            flex-direction: row;
+            justify-content: space-between;
+            text-align: left;
+            padding: 3.5rem 4rem;
+            border-radius: 1.5rem;
+        }
+
+        .cta-content {
+            text-align: left;
+        }
+
+        .cta-action {
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+    }
+</style>

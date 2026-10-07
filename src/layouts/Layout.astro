@@ -1,0 +1,222 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: "en" | "es";
+}
+
+const {
+  title,
+  description,
+  lang = "en",
+} = Astro.props;
+
+const isEs = lang === "es";
+
+const defaultTitle = isEs ? "Osmar Ruiz | Ingeniero DevOps & Backend" : "Osmar Ruiz | DevOps & Backend Engineer";
+const defaultDescription = isEs
+  ? "Osmar Ruiz - Ingeniero DevOps & Backend especializado en AWS, Kubernetes, Terraform IaC, automatización CI/CD y backends escalables (.NET, Go, Python). Creador de Nova Ticket SaaS."
+  : "Osmar Ruiz - DevOps & Backend Engineer specializing in AWS, Kubernetes, Terraform IaC, CI/CD automation, and scalable backend services (.NET, Go, Python). Creator of Nova Ticket SaaS.";
+
+const metaDescription = description || defaultDescription;
+const displayTitle = title
+  ? (title.includes("Osmar Ruiz") ? title : `${title} | Osmar Ruiz`)
+  : defaultTitle;
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const canonicalURL = new URL(Astro.url.pathname, "https://osmarruiz.com").toString();
+const enUrl = "https://osmarruiz.com" + (isEs ? pathname.replace(/^\/es/, "") || "/" : pathname);
+const esUrl = "https://osmarruiz.com" + (isEs ? pathname : `/es${pathname === "/" ? "" : pathname}`);
+const ogImage = "https://osmarruiz.com/assets/works/novafix/nova-ticket-dashboard.png";
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{displayTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Canonical & Multilingual SEO (hreflang) -->
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href="https://osmarruiz.com/" />
+
+    <link
+      rel="preload"
+      href="/fonts/montserrat-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:title" content={displayTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Osmar Ruiz" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={isEs ? "es_ES" : "en_US"} />
+    <meta property="og:locale:alternate" content={isEs ? "en_US" : "es_ES"} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={displayTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured Data (JSON-LD) for Search Engines & LLMs / GEO -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://osmarruiz.com/#person",
+          "name": "Osmar Ruiz",
+          "url": "https://osmarruiz.com",
+          "jobTitle": isEs ? "Ingeniero DevOps & Backend" : "DevOps & Backend Engineer",
+          "description": metaDescription,
+          "founder": {
+            "@id": "https://osmarruiz.com/#novaticket"
+          },
+          "knowsAbout": [
+            "DevOps",
+            "Cloud Infrastructure",
+            "Infrastructure as Code",
+            "Kubernetes",
+            "AWS",
+            "Terraform",
+            "Docker",
+            "CI/CD Pipelines",
+            "GitHub Actions",
+            "Observability",
+            "Prometheus & Grafana",
+            "Backend Engineering",
+            "High-Throughput Distributed Systems",
+            ".NET",
+            "Go (Golang)",
+            "Python",
+            "PostgreSQL",
+            "Kafka",
+            "Redis",
+            "Nova Ticket SaaS"
+          ],
+          "sameAs": [
+            "https://github.com/osmarruiz"
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://osmarruiz.com/#novaticket",
+          "name": "Nova Ticket",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Cloud / Web",
+          "description": isEs 
+            ? "Plataforma SaaS multi-inquilino para la gestión operativa, cotizaciones interactivas por WhatsApp, impresión térmica Bluetooth y trazabilidad de órdenes en talleres de tecnología."
+            : "Production multi-tenant SaaS platform managing repair order lifecycles, 1-click WhatsApp quotes, Web Bluetooth thermal printing, and operations for tech repair workshops.",
+          "author": {
+            "@id": "https://osmarruiz.com/#person"
+          },
+          "url": "https://novaticket.osmarruiz.com/"
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://osmarruiz.com/#service",
+          "name": isEs ? "Osmar Ruiz - Servicios DevOps & Backend" : "Osmar Ruiz - DevOps & Backend Engineering Services",
+          "url": "https://osmarruiz.com",
+          "provider": {
+            "@id": "https://osmarruiz.com/#person"
+          },
+          "description": isEs 
+            ? "Ingeniería DevOps, infraestructura en la nube (AWS/K8s/Terraform), pipelines de CI/CD automatizados y desarrollo backend escalable (.NET, Go, Python)."
+            : "DevOps engineering, cloud infrastructure (AWS/K8s/Terraform), automated CI/CD pipelines, and high-performance backend development (.NET, Go, Python).",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": isEs ? "Áreas de Especialidad" : "Engineering Specialties",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": isEs ? "Cloud & Infraestructura como Código (IaC)" : "Cloud & Infrastructure as Code (IaC)",
+                  "description": isEs ? "Aprovisionamiento declarativo en AWS con Terraform, Docker y orquestación con Kubernetes." : "Declarative cloud provisioning on AWS with Terraform, Docker containerization, and Kubernetes orchestration."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": isEs ? "CI/CD, GitOps & Observabilidad" : "CI/CD, GitOps & Observability",
+                  "description": isEs ? "Pipelines automatizados con GitHub Actions, métricas en tiempo real con Prometheus y Grafana." : "Automated deployment pipelines via GitHub Actions, real-time telemetry with Prometheus and Grafana."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": isEs ? "Backend de Alto Rendimiento & Sistemas Distribuidos" : "High-Performance Backend & Distributed Systems",
+                  "description": isEs ? "Microservicios concurrentes en Go, .NET 8 y Python con Kafka, Redis y PostgreSQL." : "Concurrent microservices in Go, .NET 8, and Python with Kafka, Redis, and PostgreSQL."
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": isEs ? "Arquitectura SaaS (Nova Ticket)" : "SaaS Architecture (Nova Ticket)",
+                  "description": isEs ? "Diseño multi-tenant en producción con Row Level Security y operación en la nube." : "Production multi-tenant cloud architecture with Row Level Security and active operations."
+                }
+              }
+            ]
+          }
+        }
+      ]
+    })} />
+  </head>
+  <body class="bg-[--background] sm:px-20 lg:px-28 px-6 min-h-screen text-[var(--white)] selection:bg-[var(--sec)] selection:text-[var(--background)]">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: "Montserrat Variable";
+    src: url("/fonts/montserrat-latin-wght-normal.woff2") format("woff2-variations");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --background: #101010;
+    --sec: #a476ff;
+    --white: #dfdfdf;
+    --white-icon: #f3f3f398;
+    --white-icon-tr: #f3f3f310;
+  }
+
+  * {
+    font-family: "Montserrat Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #101010;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #252525;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sec);
+  }
+</style>

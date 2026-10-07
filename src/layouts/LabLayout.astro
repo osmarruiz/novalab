@@ -1,0 +1,65 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Nova Lab — Laboratorio de Microelectrónica B2B",
+  description = "Tarifario directo de maquila y microelectrónica para talleres: Microsoldadura, Swaps de placa, ISP y Drill CPU.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="theme-dark dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="bg-[#0c0c0e] text-zinc-100 min-h-screen flex flex-col font-sans selection:bg-purple-500/30 selection:text-purple-200">
+    <!-- Purple Ambient Glow -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-purple-600/15 blur-[120px] rounded-full"></div>
+      <div class="absolute top-1/2 -right-40 w-[450px] h-[300px] bg-indigo-600/10 blur-[140px] rounded-full"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0c0c0e]/80 border-b border-zinc-800/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2.5 group">
+          <img
+            src="/logo.png"
+            alt="Nova Lab"
+            class="size-8 rounded-lg object-contain shadow-sm group-hover:scale-105 transition-transform"
+          />
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-sm text-zinc-100 tracking-tight">Nova Lab</span>
+            <span class="text-[10px] font-mono text-purple-400/90 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">B2B</span>
+          </div>
+        </a>
+
+        <a
+          href="https://wa.me/50577773083?text=Hola%20Nova%20Lab!%20%F0%9F%91%8B%20Deseo%20coordinar%20el%20env%C3%ADo%20de%20un%20equipo%20desde%20mi%20taller."
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-sm shadow-purple-600/20"
+        >
+          WhatsApp Directo
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 z-10">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800/80 py-6 z-10 mt-12 text-center text-xs font-mono text-zinc-400">
+      <p>Nova Lab — Mesa técnica exclusiva para talleres y técnicos • +505 7777-3083</p>
+    </footer>
+  </body>
+</html>

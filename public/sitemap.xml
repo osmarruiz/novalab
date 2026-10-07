@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- English Home -->
+  <url>
+    <loc>https://osmarruiz.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osmarruiz.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Spanish Home -->
+  <url>
+    <loc>https://osmarruiz.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://osmarruiz.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Nova Ticket Case Study (EN) -->
+  <url>
+    <loc>https://osmarruiz.com/work/nova-ticket/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/work/nova-ticket/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/work/nova-ticket/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Nova Ticket Case Study (ES) -->
+  <url>
+    <loc>https://osmarruiz.com/es/work/nova-ticket/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/work/nova-ticket/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/work/nova-ticket/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Loan Engine Case Study (EN) -->
+  <url>
+    <loc>https://osmarruiz.com/work/sistema-control-prestamos/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/work/sistema-control-prestamos/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/work/sistema-control-prestamos/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Loan Engine Case Study (ES) -->
+  <url>
+    <loc>https://osmarruiz.com/es/work/sistema-control-prestamos/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://osmarruiz.com/es/work/sistema-control-prestamos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://osmarruiz.com/work/sistema-control-prestamos/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

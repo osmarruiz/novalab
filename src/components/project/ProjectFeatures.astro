@@ -1,0 +1,134 @@
+---
+interface FeatureItem {
+    title: string;
+    description: string;
+}
+
+interface FeatureGroup {
+    title: string;
+    items: FeatureItem[];
+}
+
+interface Props {
+    features: FeatureGroup[];
+    label: string;
+}
+
+const { features, label } = Astro.props;
+---
+
+<section class="features-section">
+    <h2 class="section-title">{label}</h2>
+
+    <div class="features-grid">
+        {features.map((feature) => (
+            <div class="feature-box">
+                <h3 class="feature-title">{feature.title}</h3>
+                <ul class="feature-list">
+                    {feature.items.map((item) => (
+                        <li class="feature-item">
+                            <span class="item-name">{item.title}</span>
+                            <span class="item-desc">{item.description}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    .features-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 50em) {
+        .features-section {
+            gap: 2rem;
+        }
+    }
+
+    .section-title {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 48em) {
+        .features-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+
+    .feature-box {
+        background-color: var(--surface-container-low);
+        border-radius: 0.75rem;
+        padding: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        transition:
+            transform 0.4s ease,
+            box-shadow 0.4s ease,
+            background-color 0.4s ease;
+    }
+
+    .feature-box:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-ambient);
+        background-color: var(--surface-container-highest);
+    }
+
+    @media (min-width: 50em) {
+        .feature-box {
+            padding: 2.25rem;
+            border-radius: 1.25rem;
+        }
+    }
+
+    .feature-title {
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--on-surface);
+        margin: 0;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .feature-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .item-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--on-surface);
+    }
+
+    .item-desc {
+        font-size: 0.875rem;
+        color: var(--on-surface-variant);
+        line-height: 1.5;
+    }
+</style>

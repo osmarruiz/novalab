@@ -1,0 +1,50 @@
+---
+import LabLayout from '../layouts/LabLayout.astro';
+import LabPriceCatalog from '../React/LabPriceCatalog';
+---
+
+<LabLayout>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-16">
+    <!-- Clean Minimal Hero -->
+    <div class="mb-6">
+      <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono mb-2">
+        <span>Maquila & Microelectrónica para Talleres</span>
+      </div>
+      <h1 class="text-2xl sm:text-3xl font-black text-zinc-100 tracking-tight mb-1">
+        Tarifario Directo de Laboratorio
+      </h1>
+      <p class="text-xs sm:text-sm text-zinc-400 max-w-2xl">
+        Precios netos para técnicos y talleres. Tiempos en mesa de 24 a 48h con 60 a 90 días de garantía.
+      </p>
+    </div>
+
+    <!-- Diagnostic policy banner outside the table -->
+    <div class="mb-5 p-3 rounded-xl bg-purple-950/20 border border-purple-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono">
+      <div class="flex items-center gap-2 text-zinc-300">
+        <span class="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Diagnóstico GRATIS</span>
+        <span>al aprobar la reparación.</span>
+      </div>
+      <div class="text-[11px] text-zinc-400">
+        <span>Solo C$250 / $8 si el taller rechaza el presupuesto.</span>
+      </div>
+    </div>
+
+    <!-- Interactive Direct Catalog Table -->
+    <LabPriceCatalog client:load />
+
+    <!-- Simple Shipping & Delivery Note -->
+    <div class="mt-6 p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-400 font-mono">
+      <div>
+        <span>📦 Recepción local y encomiendas departamentales. Diagnóstico con video/fotos bajo microscopio incluido.</span>
+      </div>
+      <a
+        href="https://wa.me/50577773083?text=Hola%20Nova%20Lab!%20%F0%9F%91%8B%20Tengo%20una%20consulta%20t%C3%A9cnica%20de%20un%20equipo."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-purple-400 hover:text-purple-300 font-bold whitespace-nowrap"
+      >
+        Consultar caso especial →
+      </a>
+    </div>
+  </div>
+</LabLayout>

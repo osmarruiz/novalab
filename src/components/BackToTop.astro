@@ -1,0 +1,107 @@
+---
+// Back to top button component
+---
+
+<button
+    id="back-to-top"
+    class="back-to-top"
+    aria-label="Volver arriba"
+    title="Volver arriba"
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M18 15l-6-6-6 6"></path>
+    </svg>
+</button>
+
+<style>
+    .back-to-top {
+        position: fixed;
+        bottom: 2.5rem;
+        right: 2.5rem;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border: 1px solid var(--btn-border);
+        border-radius: 50%;
+        background: var(--gradient-accent);
+        color: var(--on-primary);
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(1rem);
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease,
+            transform 0.3s ease,
+            box-shadow 0.2s ease;
+        box-shadow: var(--btn-shadow);
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+        transform: translateY(-0.25rem);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .back-to-top:active {
+        transform: translateY(0);
+    }
+
+    .back-to-top svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    @media (max-width: 50em) {
+        .back-to-top {
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 2.75rem;
+            height: 2.75rem;
+        }
+    }
+</style>
+
+<script>
+    const backToTop = document.getElementById("back-to-top");
+
+    if (backToTop) {
+        // Show/hide button based on scroll position
+        const toggleVisibility = () => {
+            if (window.scrollY > 400) {
+                backToTop.classList.add("visible");
+            } else {
+                backToTop.classList.remove("visible");
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility, { passive: true });
+        toggleVisibility();
+
+        // Smooth scroll to top
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        });
+    }
+</script>

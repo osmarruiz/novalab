@@ -1,0 +1,155 @@
+---
+import Icon from "../Icon.astro";
+import { getAdjacentProjects, getProjectTranslation } from "../../data/projects";
+import { getLangFromUrl, defaultLang } from "../../i18n/utils";
+
+interface Props {
+    slug: string;
+}
+
+const { slug } = Astro.props;
+const lang = getLangFromUrl(Astro.url) as "es" | "en";
+
+const { prev, next } = getAdjacentProjects(slug);
+const prevTrans = prev ? getProjectTranslation(prev.slug, lang) : undefined;
+const nextTrans = next ? getProjectTranslation(next.slug, lang) : undefined;
+
+const getWorkPath = (itemSlug: string) => {
+    return lang === defaultLang ? `/work/${itemSlug}/` : `/${lang}/work/${itemSlug}/`;
+};
+
+const prevLabel = lang === "es" ? "Proyecto anterior" : "Previous project";
+const nextLabel = lang === "es" ? "Siguiente proyecto" : "Next project";
+---
+
+<nav class="project-pagination" aria-label="Navegación de proyectos">
+    {prev && prevTrans ? (
+        <a href={getWorkPath(prev.slug)} class="nav-card prev-card">
+            <div class="icon-circle">
+                <Icon icon="arrow-left" size="1.25rem" />
+            </div>
+            <div class="nav-text">
+                <span class="nav-direction">{prevLabel}</span>
+                <span class="nav-title">{prevTrans.title}</span>
+            </div>
+        </a>
+    ) : <div class="spacer" />}
+
+    {next && nextTrans ? (
+        <a href={getWorkPath(next.slug)} class="nav-card next-card">
+            <div class="nav-text align-right">
+                <span class="nav-direction">{nextLabel}</span>
+                <span class="nav-title">{nextTrans.title}</span>
+            </div>
+            <div class="icon-circle">
+                <Icon icon="arrow-right" size="1.25rem" />
+            </div>
+        </a>
+    ) : <div class="spacer" />}
+</nav>
+
+<style>
+    .project-pagination {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.25rem;
+        margin-top: 4rem;
+        padding-top: 2.5rem;
+        border-top: 1px solid var(--outline-variant);
+        width: 100%;
+    }
+
+    @media (min-width: 48em) {
+        .project-pagination {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-card {
+            width: auto;
+            min-width: 240px;
+            max-width: 46%;
+        }
+
+        .next-card {
+            margin-left: auto;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+    }
+
+    .nav-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background-color: var(--surface-container-low);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        transition:
+            transform 0.3s ease,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .nav-card:hover {
+        background-color: var(--surface-container-highest);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-ambient);
+    }
+
+    .next-card {
+        justify-content: flex-end;
+    }
+
+    .icon-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--surface-container);
+        color: var(--on-surface);
+        flex-shrink: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-card:hover .icon-circle {
+        background-color: var(--primary);
+        color: var(--on-primary);
+    }
+
+    .nav-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        overflow: hidden;
+    }
+
+    .nav-text.align-right {
+        text-align: right;
+    }
+
+    .nav-direction {
+        font-size: var(--text-xs, 0.8rem);
+        color: var(--on-surface-variant);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+    }
+
+    .nav-title {
+        font-size: var(--text-md);
+        font-weight: 700;
+        color: var(--on-surface);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
