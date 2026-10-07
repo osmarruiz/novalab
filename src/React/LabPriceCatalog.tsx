@@ -4,7 +4,6 @@ import { LAB_SERVICES, type LabService } from '@/data/labServices';
 
 export default function LabPriceCatalog() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedModality, setSelectedModality] = useState<'all' | 'remote' | 'lab'>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currency, setCurrency] = useState<'NIO' | 'USD'>('USD');
 
@@ -19,14 +18,13 @@ export default function LabPriceCatalog() {
   const filteredServices = useMemo(() => {
     return LAB_SERVICES.filter((svc) => {
       const matchCat = selectedCategory === 'all' || svc.category === selectedCategory;
-      const matchModality = selectedModality === 'all' || svc.modality === selectedModality;
       const matchQuery =
         svc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         svc.models.toLowerCase().includes(searchQuery.toLowerCase()) ||
         svc.symptoms.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchCat && matchModality && matchQuery;
+      return matchCat && matchQuery;
     });
-  }, [selectedCategory, selectedModality, searchQuery]);
+  }, [selectedCategory, searchQuery]);
 
   const handleWhatsapp = (svc: LabService) => {
     const priceText = currency === 'NIO' ? `C$${svc.workshopPriceNIO}` : `$${svc.workshopPriceUSD}`;
@@ -37,9 +35,9 @@ export default function LabPriceCatalog() {
 
   return (
     <div className="w-full">
-      {/* Top Bar: Search, Modality Filters & Currency Switcher */}
-      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 mb-4">
-        <div className="relative w-full lg:w-72">
+      {/* Top Bar: Search & Currency Switcher */}
+      <div className="flex flex-row items-center justify-between gap-3 mb-4">
+        <div className="relative flex-1 sm:w-80 sm:flex-initial">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-zinc-500" />
           <input
             type="text"
@@ -50,58 +48,21 @@ export default function LabPriceCatalog() {
           />
         </div>
 
-        {/* Modality Filter Pills (Remoto vs Presencial) */}
-        <div className="flex items-center gap-1.5 p-1 rounded-lg bg-zinc-900 border border-zinc-800 overflow-x-auto scrollbar-none touch-pan-x">
-          <button
-            type="button"
-            onClick={() => setSelectedModality('all')}
-            className={`px-3 py-1.5 text-xs font-mono font-medium rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
-              selectedModality === 'all'
-                ? 'bg-zinc-800 text-zinc-100'
-                : 'text-zinc-400 hover:text-zinc-200'
-            }`}
-          >
-            Todos
-          </button>
-          <button
-            type="button"
-            onClick={() => setSelectedModality('remote')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
-              selectedModality === 'remote'
-                ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30'
-                : 'text-zinc-400 hover:text-zinc-200'
-            }`}
-          >
-            <MonitorCheck className="size-3 text-sky-400 pointer-events-none" />
-            <span className="pointer-events-none">Remoto</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setSelectedModality('lab')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-semibold rounded-md whitespace-nowrap transition-transform active:scale-95 select-none cursor-pointer ${
-              selectedModality === 'lab'
-                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                : 'text-zinc-400 hover:text-zinc-200'
-            }`}
-          >
-            <MapPin className="size-3 text-purple-400 pointer-events-none" />
-            <span className="pointer-events-none">Presencial</span>
-          </button>
-        </div>
-
         {/* Currency Switcher (Default USD) */}
-        <div className="flex items-center gap-1 p-1 rounded-lg bg-zinc-900 border border-zinc-800 self-end lg:self-auto">
+        <div className="flex items-center gap-1 p-1 rounded-lg bg-zinc-900 border border-zinc-800 shrink-0">
           <button
+            type="button"
             onClick={() => setCurrency('USD')}
-            className={`px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all ${
+            className={`px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-transform active:scale-95 cursor-pointer select-none ${
               currency === 'USD' ? 'bg-purple-600 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
             $ USD
           </button>
           <button
+            type="button"
             onClick={() => setCurrency('NIO')}
-            className={`px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-all ${
+            className={`px-2.5 py-1 text-xs font-mono font-semibold rounded-md transition-transform active:scale-95 cursor-pointer select-none ${
               currency === 'NIO' ? 'bg-purple-600 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200'
             }`}
           >
@@ -204,11 +165,12 @@ export default function LabPriceCatalog() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => handleWhatsapp(svc)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-sm shadow-purple-600/20 cursor-pointer"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all active:scale-95 shadow-sm shadow-purple-600/20 cursor-pointer select-none"
                   >
                     <span>{isRemote ? 'Remoto' : 'Mesa'}</span>
-                    <ArrowRight className="size-3" />
+                    <ArrowRight className="size-3 pointer-events-none" />
                   </button>
                 </div>
               </div>
@@ -328,11 +290,12 @@ export default function LabPriceCatalog() {
                     {/* Action Button */}
                     <td className="py-3 px-4 text-center whitespace-nowrap">
                       <button
+                        type="button"
                         onClick={() => handleWhatsapp(svc)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-sm shadow-purple-600/20 cursor-pointer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all active:scale-95 shadow-sm shadow-purple-600/20 cursor-pointer select-none"
                       >
                         <span>{isRemote ? 'Remoto' : 'Mesa'}</span>
-                        <ArrowRight className="size-3" />
+                        <ArrowRight className="size-3 pointer-events-none" />
                       </button>
                     </td>
                   </tr>
