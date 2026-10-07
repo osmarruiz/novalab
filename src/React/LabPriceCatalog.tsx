@@ -1,23 +1,35 @@
 import { useState, useMemo } from 'react';
-import { Search, Clock, ArrowRight, Layers, Radio, Wrench, RefreshCw, KeyRound, MonitorCheck, MapPin } from 'lucide-react';
+import { Search, Clock, Radio, Wrench, RefreshCw, KeyRound, MonitorCheck, MapPin } from 'lucide-react';
 import { LAB_SERVICES, type LabService } from '@/data/labServices';
 
+function WhatsAppIcon({ className = "size-4" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
 export default function LabPriceCatalog() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('microsoldering');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currency, setCurrency] = useState<'NIO' | 'USD'>('USD');
 
   const categories = [
-    { id: 'all', label: 'Todos', icon: Layers },
     { id: 'microsoldering', label: 'Microsoldadura', icon: Wrench },
-    { id: 'board_swap', label: 'Cambio de Placa / Swap', icon: RefreshCw },
+    { id: 'board_swap', label: 'Cambio de Placa', icon: RefreshCw },
     { id: 'network_unlock', label: 'Desbloqueos de Red', icon: Radio },
-    { id: 'account_unlock', label: 'Cuenta Google & Cuenta Mi', icon: KeyRound },
+    { id: 'account_unlock', label: 'Cuenta Google & Mi', icon: KeyRound },
   ];
 
   const filteredServices = useMemo(() => {
     return LAB_SERVICES.filter((svc) => {
-      const matchCat = selectedCategory === 'all' || svc.category === selectedCategory;
+      const matchCat = svc.category === selectedCategory;
       const matchQuery =
         svc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         svc.models.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -72,7 +84,7 @@ export default function LabPriceCatalog() {
       </div>
 
       {/* Tabs por Categoría */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 mb-4 scrollbar-none touch-pan-x">
+      <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 mb-4">
         {categories.map((cat) => {
           const IconComp = cat.icon;
           const isActive = selectedCategory === cat.id;
@@ -81,21 +93,21 @@ export default function LabPriceCatalog() {
               type="button"
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-transform active:scale-95 border cursor-pointer select-none ${
+              className={`flex items-center justify-center sm:justify-start gap-1.5 px-3 py-2.5 sm:py-2 rounded-lg text-xs font-medium transition-transform active:scale-95 border cursor-pointer select-none ${
                 isActive
                   ? 'bg-purple-950/60 border-purple-500/60 text-purple-300 shadow-sm'
                   : 'bg-zinc-900/40 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850'
               }`}
             >
-              <IconComp className={`size-3.5 pointer-events-none ${isActive ? 'text-purple-400' : 'text-zinc-500'}`} />
-              <span className="pointer-events-none">{cat.label}</span>
+              <IconComp className={`size-3.5 shrink-0 pointer-events-none ${isActive ? 'text-purple-400' : 'text-zinc-500'}`} />
+              <span className="truncate pointer-events-none">{cat.label}</span>
             </button>
           );
         })}
       </div>
 
       {/* Technical notice for Board Swap */}
-      {(selectedCategory === 'board_swap' || selectedCategory === 'all') && (
+      {selectedCategory === 'board_swap' && (
         <div className="mb-4 p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-start gap-2.5 text-xs font-mono">
           <span className="text-amber-400 text-sm mt-0.5 shrink-0">⚠️</span>
           <div className="text-zinc-300 text-[11px] leading-relaxed">
@@ -162,12 +174,12 @@ export default function LabPriceCatalog() {
                 <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between gap-2">
                   <div className="flex items-baseline gap-3">
                     <div>
-                      <div className="text-[9px] uppercase font-mono text-zinc-400">Tarifa Taller</div>
+                      <div className="text-[9px] uppercase font-mono text-purple-400/90 font-bold">Te cobramos</div>
                       <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
                     </div>
 
                     <div className="border-l border-zinc-800 pl-3">
-                      <div className="text-[9px] uppercase font-mono text-zinc-400">Público Sugerido</div>
+                      <div className="text-[9px] uppercase font-mono text-emerald-400/90 font-bold">Tú puedes cobrar</div>
                       <div className="text-xs font-bold font-mono text-emerald-400 flex items-center gap-1 leading-none">
                         <span>{suggestedRetail}</span>
                         <span className="text-[9px] text-emerald-500 font-semibold">({profitFormatted})</span>
@@ -178,10 +190,10 @@ export default function LabPriceCatalog() {
                   <button
                     type="button"
                     onClick={() => handleWhatsapp(svc)}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all active:scale-95 shadow-sm shadow-purple-600/20 cursor-pointer select-none"
+                    aria-label="Consultar por WhatsApp"
+                    className="size-9 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/30 text-[#25D366] flex items-center justify-center transition-all active:scale-95 shadow-sm shadow-[#25D366]/10 cursor-pointer select-none shrink-0"
                   >
-                    <span>{isRemote ? 'Remoto' : 'Mesa'}</span>
-                    <ArrowRight className="size-3 pointer-events-none" />
+                    <WhatsAppIcon className="size-5 pointer-events-none" />
                   </button>
                 </div>
               </div>
@@ -199,9 +211,9 @@ export default function LabPriceCatalog() {
               <th className="py-3 px-3">Modalidad</th>
               <th className="py-3 px-3">Modelos</th>
               <th className="py-3 px-3">Tiempo</th>
-              <th className="py-3 px-3 text-right">Tarifa Taller</th>
-              <th className="py-3 px-3 text-right bg-emerald-950/10 border-l border-zinc-800/80">
-                Cobro Sugerido
+              <th className="py-3 px-3 text-right text-purple-400">Nosotros te cobramos</th>
+              <th className="py-3 px-3 text-right bg-emerald-950/10 border-l border-zinc-800/80 text-emerald-400">
+                Tú puedes cobrar
               </th>
               <th className="py-3 px-4 text-center">Acción</th>
             </tr>
@@ -231,13 +243,8 @@ export default function LabPriceCatalog() {
                   >
                     {/* Service & Symptoms */}
                     <td className="py-3 px-4">
-                      <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="font-bold text-zinc-100 group-hover:text-purple-300 transition-colors">
-                          {svc.name}
-                        </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 whitespace-nowrap">
-                          {svc.categoryLabel}
-                        </span>
+                      <div className="font-bold text-zinc-100 group-hover:text-purple-300 transition-colors mb-1">
+                        {svc.name}
                       </div>
                       <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-zinc-400">
                         {svc.symptoms.map((sym, i) => (
@@ -303,10 +310,10 @@ export default function LabPriceCatalog() {
                       <button
                         type="button"
                         onClick={() => handleWhatsapp(svc)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all active:scale-95 shadow-sm shadow-purple-600/20 cursor-pointer select-none"
+                        aria-label="Consultar por WhatsApp"
+                        className="size-8 rounded-lg bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/30 text-[#25D366] inline-flex items-center justify-center transition-all active:scale-95 shadow-sm shadow-[#25D366]/10 cursor-pointer select-none mx-auto"
                       >
-                        <span>{isRemote ? 'Remoto' : 'Mesa'}</span>
-                        <ArrowRight className="size-3 pointer-events-none" />
+                        <WhatsAppIcon className="size-4 pointer-events-none" />
                       </button>
                     </td>
                   </tr>
