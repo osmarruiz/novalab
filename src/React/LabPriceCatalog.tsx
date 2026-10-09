@@ -193,7 +193,7 @@ export default function LabPriceCatalog() {
                     </div>
                   ) : (
                     <div>
-                      <div className="text-[9px] uppercase font-mono text-zinc-400 font-bold">Tarifa Taller</div>
+                      <div className="text-[9px] uppercase font-mono text-zinc-400 font-bold">Precio</div>
                       <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
                     </div>
                   )}
@@ -222,7 +222,7 @@ export default function LabPriceCatalog() {
               <th className="py-3 px-3">Modalidad</th>
               <th className="py-3 px-3">Modelos</th>
               <th className="py-3 px-3">Tiempo</th>
-              <th className="py-3 px-3 text-right text-purple-400">Tarifa Taller</th>
+              <th className="py-3 px-3 text-right text-purple-400">Precio</th>
               <th className="py-3 px-4 text-center">Acción</th>
             </tr>
           </thead>
