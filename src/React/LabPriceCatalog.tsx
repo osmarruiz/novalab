@@ -119,6 +119,17 @@ export default function LabPriceCatalog() {
         </div>
       )}
 
+      {/* Technical notice for Network Unlock */}
+      {selectedCategory === 'network_unlock' && (
+        <div className="mb-4 p-3 rounded-xl bg-purple-950/20 border border-purple-500/30 flex items-start gap-2.5 text-xs font-mono">
+          <span className="text-purple-400 text-sm mt-0.5 shrink-0">🛡️</span>
+          <div className="text-zinc-300 text-[11px] leading-relaxed">
+            <span className="text-purple-400 font-bold">Términos y Políticas de Servidor (IMEI): </span>
+            Garantía sin rebloqueo (Lifetime). Pedidos en proceso no admiten cancelación ni modificación. IMEI, operador o modelo incorrecto enviado no aplica reembolso por políticas de servidor directo. Verifica operadora e IMEI con reporte previo antes de ingresar el pedido.
+          </div>
+        </div>
+      )}
+
       {/* 1. Vista Móvil (Tarjetas Nativas) */}
       <div className="md:hidden space-y-3">
         {filteredServices.length === 0 ? (
