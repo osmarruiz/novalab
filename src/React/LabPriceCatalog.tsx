@@ -39,7 +39,9 @@ export default function LabPriceCatalog() {
   }, [selectedCategory, searchQuery]);
 
   const handleWhatsapp = (svc: LabService) => {
-    const priceText = currency === 'NIO' ? `C$${svc.workshopPriceNIO}` : `$${svc.workshopPriceUSD}`;
+    const priceText = svc.workshopPriceUSD === 0 
+      ? 'Cotización en vivo según modelo y capacidad'
+      : (currency === 'NIO' ? `C$${svc.workshopPriceNIO}` : `$${svc.workshopPriceUSD}`);
     const modText = svc.modality === 'remote' ? '🌐 Remoto / Server' : '🔬 Mesa Quirúrgica';
     const text = `Hola Nova Lab! 👋 Consulto disponibilidad para un servicio:\n\n🔬 *Servicio:* ${svc.name}\n📍 *Modalidad:* ${modText}\n📱 *Modelo:* ${svc.models}\n💰 *Tarifa Taller:* ${priceText}`;
     window.open(`https://wa.me/50577773083?text=${encodeURIComponent(text)}`, '_blank');
@@ -172,20 +174,31 @@ export default function LabPriceCatalog() {
 
                 {/* Pricing & CTA */}
                 <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between gap-2">
-                  <div className="flex items-baseline gap-3">
-                    <div>
-                      <div className="text-[9px] uppercase font-mono text-purple-400/90 font-bold">Te cobramos</div>
-                      <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
+                  {svc.workshopPriceUSD === 0 ? (
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-black font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 inline-block w-fit">
+                        Cotización al día
+                      </span>
+                      <span className="text-[10px] font-mono text-emerald-400 font-semibold">
+                        Ganas +$80 a +$150 USD
+                      </span>
                     </div>
+                  ) : (
+                    <div className="flex items-baseline gap-3">
+                      <div>
+                        <div className="text-[9px] uppercase font-mono text-purple-400/90 font-bold">Te cobramos</div>
+                        <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
+                      </div>
 
-                    <div className="border-l border-zinc-800 pl-3">
-                      <div className="text-[9px] uppercase font-mono text-emerald-400/90 font-bold">Tú puedes cobrar</div>
-                      <div className="text-xs font-bold font-mono text-emerald-400 flex items-center gap-1 leading-none">
-                        <span>{suggestedRetail}</span>
-                        <span className="text-[9px] text-emerald-500 font-semibold">({profitFormatted})</span>
+                      <div className="border-l border-zinc-800 pl-3">
+                        <div className="text-[9px] uppercase font-mono text-emerald-400/90 font-bold">Tú puedes cobrar</div>
+                        <div className="text-xs font-bold font-mono text-emerald-400 flex items-center gap-1 leading-none">
+                          <span>{suggestedRetail}</span>
+                          <span className="text-[9px] text-emerald-500 font-semibold">({profitFormatted})</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   <button
                     type="button"
@@ -284,26 +297,47 @@ export default function LabPriceCatalog() {
                       </div>
                     </td>
 
-                    {/* Workshop Price */}
-                    <td className="py-3 px-3 text-right whitespace-nowrap">
-                      <div className="text-sm font-black font-mono text-purple-400">
-                        {workshopPrice}
-                      </div>
-                      <div className="text-[10px] font-mono text-zinc-500">Neto taller</div>
-                    </td>
+                    {svc.workshopPriceUSD === 0 ? (
+                      <>
+                        <td className="py-3 px-3 text-right whitespace-nowrap">
+                          <span className="inline-block text-xs font-black font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
+                            Cotización al día
+                          </span>
+                          <div className="text-[10px] font-mono text-zinc-500">Según modelo/capacidad</div>
+                        </td>
+                        <td className="py-3 px-3 text-right whitespace-nowrap bg-emerald-950/5 border-l border-zinc-800/80">
+                          <div className="text-xs font-bold font-mono text-emerald-400">
+                            Ganas +$80 a +$150 USD
+                          </div>
+                          <div className="text-[10px] font-mono text-emerald-500/90 font-semibold">
+                            Margen neto para el taller
+                          </div>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        {/* Workshop Price */}
+                        <td className="py-3 px-3 text-right whitespace-nowrap">
+                          <div className="text-sm font-black font-mono text-purple-400">
+                            {workshopPrice}
+                          </div>
+                          <div className="text-[10px] font-mono text-zinc-500">Neto taller</div>
+                        </td>
 
-                    {/* Suggested Retail & Margin (Always Visible) */}
-                    <td className="py-3 px-3 text-right whitespace-nowrap bg-emerald-950/5 border-l border-zinc-800/80">
-                      <div className="text-xs font-bold font-mono text-zinc-200">
-                        {suggestedRetail}
-                      </div>
-                      <div className="text-[10px] font-mono text-emerald-400 font-semibold flex items-center justify-end gap-1">
-                        <span>Ganas {profitFormatted}</span>
-                        <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          {marginPercent}%
-                        </span>
-                      </div>
-                    </td>
+                        {/* Suggested Retail & Margin (Always Visible) */}
+                        <td className="py-3 px-3 text-right whitespace-nowrap bg-emerald-950/5 border-l border-zinc-800/80">
+                          <div className="text-xs font-bold font-mono text-zinc-200">
+                            {suggestedRetail}
+                          </div>
+                          <div className="text-[10px] font-mono text-emerald-400 font-semibold flex items-center justify-end gap-1">
+                            <span>Ganas {profitFormatted}</span>
+                            <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                              {marginPercent}%
+                            </span>
+                          </div>
+                        </td>
+                      </>
+                    )}
 
                     {/* Action Button */}
                     <td className="py-3 px-4 text-center whitespace-nowrap">
