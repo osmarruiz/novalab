@@ -176,27 +176,15 @@ export default function LabPriceCatalog() {
                 <div className="pt-2.5 border-t border-zinc-800/80 flex items-center justify-between gap-2">
                   {svc.workshopPriceUSD === 0 ? (
                     <div className="flex flex-col gap-0.5">
+                      <div className="text-[9px] uppercase font-mono text-zinc-400 font-bold">Precio</div>
                       <span className="text-xs font-black font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 inline-block w-fit">
                         Cotización al día
                       </span>
-                      <span className="text-[10px] font-mono text-emerald-400 font-semibold">
-                        Ganas +$80 a +$150 USD
-                      </span>
                     </div>
                   ) : (
-                    <div className="flex items-baseline gap-3">
-                      <div>
-                        <div className="text-[9px] uppercase font-mono text-purple-400/90 font-bold">Te cobramos</div>
-                        <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
-                      </div>
-
-                      <div className="border-l border-zinc-800 pl-3">
-                        <div className="text-[9px] uppercase font-mono text-emerald-400/90 font-bold">Tú puedes cobrar</div>
-                        <div className="text-xs font-bold font-mono text-emerald-400 flex items-center gap-1 leading-none">
-                          <span>{suggestedRetail}</span>
-                          <span className="text-[9px] text-emerald-500 font-semibold">({profitFormatted})</span>
-                        </div>
-                      </div>
+                    <div>
+                      <div className="text-[9px] uppercase font-mono text-zinc-400 font-bold">Tarifa Taller</div>
+                      <div className="text-base font-black font-mono text-purple-400 leading-none">{workshopPrice}</div>
                     </div>
                   )}
 
@@ -224,29 +212,20 @@ export default function LabPriceCatalog() {
               <th className="py-3 px-3">Modalidad</th>
               <th className="py-3 px-3">Modelos</th>
               <th className="py-3 px-3">Tiempo</th>
-              <th className="py-3 px-3 text-right text-purple-400">Nosotros te cobramos</th>
-              <th className="py-3 px-3 text-right bg-emerald-950/10 border-l border-zinc-800/80 text-emerald-400">
-                Tú puedes cobrar
-              </th>
+              <th className="py-3 px-3 text-right text-purple-400">Tarifa Taller</th>
               <th className="py-3 px-4 text-center">Acción</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/60 text-xs">
             {filteredServices.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-8 text-center text-zinc-500 font-mono text-xs">
+                <td colSpan={6} className="py-8 text-center text-zinc-500 font-mono text-xs">
                   No se encontraron servicios para la búsqueda seleccionada.
                 </td>
               </tr>
             ) : (
               filteredServices.map((svc) => {
                 const workshopPrice = currency === 'NIO' ? `C$${svc.workshopPriceNIO}` : `$${svc.workshopPriceUSD}`;
-                const suggestedRetail = currency === 'NIO' ? `C$${svc.suggestedRetailNIO}` : `$${svc.suggestedRetailUSD}`;
-                const profitAmount = currency === 'NIO' 
-                  ? svc.suggestedRetailNIO - svc.workshopPriceNIO 
-                  : svc.suggestedRetailUSD - svc.workshopPriceUSD;
-                const profitFormatted = currency === 'NIO' ? `+C$${profitAmount}` : `+$${profitAmount}`;
-                const marginPercent = Math.round((profitAmount / (currency === 'NIO' ? svc.suggestedRetailNIO : svc.suggestedRetailUSD)) * 100);
                 const isRemote = svc.modality === 'remote';
 
                 return (
@@ -298,45 +277,19 @@ export default function LabPriceCatalog() {
                     </td>
 
                     {svc.workshopPriceUSD === 0 ? (
-                      <>
-                        <td className="py-3 px-3 text-right whitespace-nowrap">
-                          <span className="inline-block text-xs font-black font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
-                            Cotización al día
-                          </span>
-                          <div className="text-[10px] font-mono text-zinc-500">Según modelo/capacidad</div>
-                        </td>
-                        <td className="py-3 px-3 text-right whitespace-nowrap bg-emerald-950/5 border-l border-zinc-800/80">
-                          <div className="text-xs font-bold font-mono text-emerald-400">
-                            Ganas +$80 a +$150 USD
-                          </div>
-                          <div className="text-[10px] font-mono text-emerald-500/90 font-semibold">
-                            Margen neto para el taller
-                          </div>
-                        </td>
-                      </>
+                      <td className="py-3 px-3 text-right whitespace-nowrap">
+                        <span className="inline-block text-xs font-black font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
+                          Cotización al día
+                        </span>
+                        <div className="text-[10px] font-mono text-zinc-500">Según modelo/capacidad</div>
+                      </td>
                     ) : (
-                      <>
-                        {/* Workshop Price */}
-                        <td className="py-3 px-3 text-right whitespace-nowrap">
-                          <div className="text-sm font-black font-mono text-purple-400">
-                            {workshopPrice}
-                          </div>
-                          <div className="text-[10px] font-mono text-zinc-500">Neto taller</div>
-                        </td>
-
-                        {/* Suggested Retail & Margin (Always Visible) */}
-                        <td className="py-3 px-3 text-right whitespace-nowrap bg-emerald-950/5 border-l border-zinc-800/80">
-                          <div className="text-xs font-bold font-mono text-zinc-200">
-                            {suggestedRetail}
-                          </div>
-                          <div className="text-[10px] font-mono text-emerald-400 font-semibold flex items-center justify-end gap-1">
-                            <span>Ganas {profitFormatted}</span>
-                            <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                              {marginPercent}%
-                            </span>
-                          </div>
-                        </td>
-                      </>
+                      <td className="py-3 px-3 text-right whitespace-nowrap">
+                        <div className="text-sm font-black font-mono text-purple-400">
+                          {workshopPrice}
+                        </div>
+                        <div className="text-[10px] font-mono text-zinc-500">Neto taller</div>
+                      </td>
                     )}
 
                     {/* Action Button */}
