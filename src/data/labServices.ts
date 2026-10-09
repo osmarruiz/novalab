@@ -1,6 +1,6 @@
 export interface LabService {
   id: string;
-  category: 'microsoldering' | 'board_swap' | 'network_unlock' | 'account_unlock';
+  category: 'hardware' | 'network_unlock' | 'account_unlock';
   categoryLabel: string;
   modality: 'remote' | 'lab';
   name: string;
@@ -15,11 +15,11 @@ export interface LabService {
 }
 
 export const LAB_SERVICES: LabService[] = [
-  // 1. Microsoldadura & Placas (Presencial)
+  // 1. Hardware & Microsoldadura (Presencial / Laboratorio)
   {
     id: 'short-ip11-12',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Corto en Placa / No Enciende (Línea VDD / PMIC)',
     models: 'iPhone 11 / 12 / Android Gama Media',
@@ -33,8 +33,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'short-ip13-15',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Corto en Placa / No Enciende (Línea Principal / PMIC)',
     models: 'iPhone 13, 14, 15 Series & Samsung Serie S',
@@ -48,8 +48,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'short-ip16',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Corto en Placa / No Enciende (Línea Principal / A18)',
     models: 'iPhone 16 / 16 Plus / 16 Pro / 16 Pro Max',
@@ -63,8 +63,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'charge-ip11-12',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Falla de Carga / IC USB (Hydra / Tristar / OVP)',
     models: 'iPhone 11 al 12 / Android',
@@ -78,8 +78,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'charge-ip13-15',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Falla de Carga / Controlador USB-C (Tigris / PMIC)',
     models: 'iPhone 13 al 15 Pro Max',
@@ -93,8 +93,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'charge-ip16',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Falla de Carga / Controlador Tipo C (Serie 16)',
     models: 'iPhone 16 Series',
@@ -108,8 +108,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'baseband-ipX-12',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Sin Señal / Baseband / Reballing Interposer',
     models: 'iPhone X al 12 Pro Max',
@@ -123,8 +123,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'baseband-ip13-15',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Sin Señal / Baseband / Reballing Interposer',
     models: 'iPhone 13 al 15 Pro Max',
@@ -138,8 +138,8 @@ export const LAB_SERVICES: LabService[] = [
   },
   {
     id: 'baseband-ip16',
-    category: 'microsoldering',
-    categoryLabel: 'Microsoldadura',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Sin Señal / Baseband / Reballing Interposer',
     models: 'iPhone 16 Series',
@@ -151,12 +151,10 @@ export const LAB_SERVICES: LabService[] = [
     deliveryTime: '24-48 hrs',
     warrantyDays: 60,
   },
-
-  // 2. Cambios de Placa & Swaps (iPhone 11 al 17 Pro Max)
   {
     id: 'swap-iphone-all',
-    category: 'board_swap',
-    categoryLabel: 'Cambio de Placa / Swap',
+    category: 'hardware',
+    categoryLabel: 'Hardware',
     modality: 'lab',
     name: 'Importación & Cambio de Placa Completa (Clean + Face ID)',
     models: 'iPhone 11 al 17 Pro Max (Todas las capacidades)',
@@ -172,44 +170,8 @@ export const LAB_SERVICES: LabService[] = [
     deliveryTime: '8 a 15 días',
     warrantyDays: 60,
   },
-  {
-    id: 'swap-labor-transplant',
-    category: 'board_swap',
-    categoryLabel: 'Cambio de Placa / Swap',
-    modality: 'lab',
-    name: 'Mano de Obra: Trasplante / Swap de Chips (Placa Donante)',
-    models: 'iPhone 11 al 16 Pro Max (Donante aportada por taller)',
-    symptoms: [
-      'Trasplante de CPU + NAND + Baseband + EEPROM',
-      'Laboratorio especializado de microelectrónica bajo microscopio'
-    ],
-    workshopPriceNIO: 2800,
-    workshopPriceUSD: 75,
-    suggestedRetailNIO: 5200,
-    suggestedRetailUSD: 140,
-    deliveryTime: '48 hrs',
-    warrantyDays: 60,
-  },
-  {
-    id: 'swap-rf-board',
-    category: 'board_swap',
-    categoryLabel: 'Cambio de Placa / Swap',
-    modality: 'lab',
-    name: 'Swap de Placa RF / Cara B (Señal & Baseband)',
-    models: 'iPhone 12 al 15 Pro Max',
-    symptoms: [
-      'Separación de placa sándwich y trasplante a cara B donante',
-      'Solución definitiva para fallas de señal irreparables en placa inferior'
-    ],
-    workshopPriceNIO: 1650,
-    workshopPriceUSD: 45,
-    suggestedRetailNIO: 3100,
-    suggestedRetailUSD: 85,
-    deliveryTime: '24-48 hrs',
-    warrantyDays: 60,
-  },
 
-  // 3. Desbloqueos de Red & Carrier Relock (Remoto)
+  // 2. Desbloqueos de Red & Carrier Relock (Remoto)
   {
     id: 'unlock-moto-nokia-oneplus',
     category: 'network_unlock',

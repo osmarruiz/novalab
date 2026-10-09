@@ -16,13 +16,12 @@ function WhatsAppIcon({ className = "size-4" }: { className?: string }) {
 }
 
 export default function LabPriceCatalog() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('microsoldering');
+  const [selectedCategory, setSelectedCategory] = useState<string>('hardware');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currency, setCurrency] = useState<'NIO' | 'USD'>('USD');
 
   const categories = [
-    { id: 'microsoldering', label: 'Microsoldadura', icon: Wrench },
-    { id: 'board_swap', label: 'Cambio de Placa', icon: RefreshCw },
+    { id: 'hardware', label: 'Hardware', icon: Wrench },
     { id: 'network_unlock', label: 'Desbloqueos de Red', icon: Radio },
     { id: 'account_unlock', label: 'Cuenta Google & Mi', icon: KeyRound },
   ];
@@ -86,7 +85,7 @@ export default function LabPriceCatalog() {
       </div>
 
       {/* Tabs por Categoría */}
-      <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 mb-4">
+      <div className="grid grid-cols-3 sm:flex sm:items-center gap-2 mb-4">
         {categories.map((cat) => {
           const IconComp = cat.icon;
           const isActive = selectedCategory === cat.id;
@@ -108,13 +107,13 @@ export default function LabPriceCatalog() {
         })}
       </div>
 
-      {/* Technical notice for Board Swap */}
-      {selectedCategory === 'board_swap' && (
+      {/* Technical notice for Hardware / Motherboard import */}
+      {selectedCategory === 'hardware' && (
         <div className="mb-4 p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 flex items-start gap-2.5 text-xs font-mono">
-          <span className="text-amber-400 text-sm mt-0.5 shrink-0">⚠️</span>
+          <span className="text-amber-400 text-sm mt-0.5 shrink-0">🔬</span>
           <div className="text-zinc-300 text-[11px] leading-relaxed">
-            <span className="text-amber-400 font-bold">Nota técnica sobre Cambio de Placa: </span>
-            Servicio de <strong className="text-zinc-200">último recurso</strong> para placas con daño severo o irreparables. Al montar una placa nueva, componentes vinculados a la placa anterior (pantalla, cámara o batería) pueden reflejar aviso de <em>"Pieza desconocida"</em> en Ajustes de iOS. Todas las placas se entregan 100% funcionales y con Face ID sincronizado.
+            <span className="text-amber-400 font-bold">Laboratorio Hardware & Microsoldadura: </span>
+            Reparación a nivel de componentes en placa y trasplante de tarjetas lógicas. En importación de placas completas (iPhone 11-17PM), se entregan 100% testeadas y con Face ID activo bajo cotización diaria.
           </div>
         </div>
       )}
